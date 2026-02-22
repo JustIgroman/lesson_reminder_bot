@@ -5,6 +5,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 TOKEN = os.getenv("TOKEN")
 
+# --- Хэндлеры ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Привіт 👋\n\n"
@@ -21,7 +22,8 @@ async def set_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         hour, minute = map(int, context.args[0].split(":"))
         reminder_time = time(hour, minute)
 
-        context.job_queue.run_daily(
+        # Используем job_queue через application
+        context.application.job_queue.run_daily(
             send_reminder,
             reminder_time,
             chat_id=update.effective_chat.id,
@@ -40,9 +42,12 @@ async def send_reminder(context: ContextTypes.DEFAULT_TYPE):
         text="⏰ Час на урок!"
     )
 
+# --- Создание приложения ---
 app = ApplicationBuilder().token(TOKEN).build()
 
+# --- Регистрируем хэндлеры ---
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("set", set_time))
 
+# --- Запуск ---
 app.run_polling()
