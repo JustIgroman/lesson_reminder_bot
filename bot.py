@@ -19,7 +19,7 @@ logging.getLogger('apscheduler.scheduler').setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 
-TOKEN = '8284386701:AAF0CYjWxmM1wgGeKVbGrW8XGkgWkmmMqGw'
+TOKEN = '8284386701:AAGUq_drKOb8dCgTovXWH4XTc9FzX6-Eu9c'
 DB_FILE = 'reminders.csv'
 USERS_FILE = 'users.csv'
 
